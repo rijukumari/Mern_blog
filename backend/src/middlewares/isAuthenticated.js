@@ -1,25 +1,61 @@
-import jwt from "jsonwebtoken";
-import User from "../models/user.model.js";
+// import jwt from 'jsonwebtoken';
+// import User from '../models/user.model.js';
 
-export const isAuthenticated = async (req, resizeBy, next) => {
+// export const isAuthenticated = async(req,res,next) =>{
+//   let token;
+//   if(
+//     req.headers.authorization && 
+//     req.headers.authorization.startsWith('Bearer')
+//   ) {
+//     token = req.headers.authorization.split(" ")[1];
+//     console.log("Token",token)
+//   }
+//   if(!token){
+//     return res.status(402).json({message:"unauthorized"})
+//   }
+//   try{
+//     const decoded = jwt.verify(token,process.env.JWT_SECRET);
+//     req.user = await User.findById(decoded.id).select("-password");
+//     if(!req.user){
+//       return res.status(401).json({message:"User not found"});
+//     }
+//     next()
+//   } catch(error){
+//     console.log("Error in authentication",error)
+//   }
+// }
+
+import jwt from 'jsonwebtoken';
+import User from '../models/user.model.js';
+
+export const isAuthenticated = async (req, res, next) => {
   let token;
+  
   if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.authorization && 
+    req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(" ")[1];
+    console.log("Token:", token);
   }
-  if(!token){
-    return res.status(402).json({message:"unauthorized"})
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized - No token provided" });
   }
-  try{
-    const decoded = jwt.verify(token,process.env.JWT_SCERECT);
-    req.user = await User.findById(decoded.id).select("-password");
-    if(!req.user){
-        return res.status(401).json({message:"user not found"})
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // id ya _id jo JWT me store hai wo le lo
+    req.user = await User.findById(decoded.id || decoded._id).select("name image email");
+    
+    if (!req.user) {
+      return res.status(401).json({ message: "User not found" });
     }
-    next()
-    } catch(error){
-        console.log("Error in authentication",error)
+
+    next();
+  } catch (error) {
+    console.log("Error in authentication", error);
+    return res.status(401).json({ message: "Unauthorized - Invalid token" });
   }
 };

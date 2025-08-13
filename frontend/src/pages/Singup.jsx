@@ -12,39 +12,34 @@ function Singup() {
     image:null
   })
   const navigate = useNavigate()
-  const [loading,setLoading] = useState(false)
+  const [setLoading] = useState(false)
   const OnChangeHandler = (e) => {
     setFormData({...formData,[e.target.name]:e.target.value})
 
   }
-const submitHandler = async(e)=>{
+
+  const submitHandler = async (e) => {
   e.preventDefault();
-  try{
-    const data = new FormData()
-    data.append("name",formData.name);
-    data.append("email",formData.email);
-    data.append("password",formData.password);
-    data.append("image",formData.image);
-    setLoading(true)
-    const res = await axios.post("http://localhost:2044/user/register",data,{
-      headers:{
-        "Content-Type":"multipart/formData"
-      }
-    })
-    if(res.data.success){
+  try {
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("password", formData.password);
+    data.append("image", formData.image);
+
+    setLoading(true);
+    const res = await axios.post("http://localhost:2044/user/register", data); // No manual headers
+    if (res.data.success) {
       toast.success(res.data.message);
-      navigate('/login')
+      navigate('/login');
     }
-
-  }catch(error){
-    toast.error(error.message)
-
-
-  }finally {
-      setLoading(false)
-    }
-
+  } catch (error) {
+    toast.error(error.response?.data?.message || error.message);
+  } finally {
+    setLoading(false);
   }
+};
+
 
   const fileHandler = (e)=>{
     setFormData({...formData,image:e.target.files[0]})
