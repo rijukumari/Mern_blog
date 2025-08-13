@@ -23,7 +23,8 @@ function Login() {
     e.preventDefault();
     try{
       setLoading(true)
-      const res = await axios.post("http://localhost:2044/user/login",formData,{
+      // const res = await axios.post("http://localhost:2044/user/login",formData,{
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/login`,formData,{
         headers:{
           "Content-Type":"application/json"
         }

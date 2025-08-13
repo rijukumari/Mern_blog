@@ -19,7 +19,7 @@ const StoreContextProvider = ({ children }) => {
     useEffect(() => {
         const allBlogs = async () => {
             try {
-                const res = await axios.get('http://localhost:2044/blog/all');
+                const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/blog/all`);
                 console.log(res.data)
                 setBlogData(res.data.blogs);
 

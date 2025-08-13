@@ -21,7 +21,7 @@ function SingleBlog() {
   return (
     <div className="rounded-md shadow-lg p-5 max-w-lg mt-4 flex flex-col gap-3 items-center justify-center mx-auto py-8">
       <img
-        src={`http://localhost:2044/images/${blog.image}`}
+        src={`${import.meta.env.VITE_BACKEND_URL}/images/${blog.image}`}
         className=" w-full transition-transform duration-300 hover:scale-105"
         alt={blog.title}
       />
@@ -31,7 +31,7 @@ function SingleBlog() {
       <div className="flex gap-2 items-center justify-center">
         <p className="text-lg font-bold">Author: {blog.author?.name}</p>
         <img
-          src={`http://localhost:2044/images/${blog.author?.image}`}
+          src={`${import.meta.env.VITE_BACKEND_URL}/images/${blog.author?.image}`}
           className="w-12 h-11 rounded-full"
           alt={blog.author?.name}
         />
