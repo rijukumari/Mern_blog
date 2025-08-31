@@ -11,28 +11,44 @@ function BlogCard({
   date,
 }) {
   return (
-    <div className="border-1 border-gray-300 shadow-md p-3 rounded-md">
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300">
       <Link to={`/blog/${id}`}>
-        <img src={`${import.meta.env.VITE_BACKEND_URL}/images/${image}`} alt="" className=" relative z-10 flex items-center justify-center w-full mx-auto cursor-pointer transform duration-300 hover:scale-105" />
+        <img
+          src={`${import.meta.env.VITE_BACKEND_URL}/images/${image}`}
+          alt="blog"
+          className="w-full h-56 object-cover transform transition duration-500 hover:scale-105"
+        />
       </Link>
 
-      <p className="text-[#4B6BFB] font-semibold my-3">{category}</p>
-      <h1 className="text-xl font-bold ">{title}</h1>
-      <div className="flex gap-3 items-center my-3">
-        <img className="w-8 h-8 rounded-full" src={`${import.meta.env.VITE_BACKEND_URL}/images/${author_image}`} alt="img" />
-        <p className="text-lg font-bold text-gray-600">{author_name} </p>
-        <p className="text-lg font-bold text-gray-600">{
-          new Date(date).toLocaleDateString("en-US", {
-            month: "long",
-            day: "2-digit",
-            year: "numeric"
-          })
-        }
-        </p>
+      <div className="p-5">
+        <span className="inline-block px-3 py-1 text-sm font-semibold text-blue-600 bg-blue-100 rounded-full">
+          {category}
+        </span>
+
+        <h1 className="mt-3 text-xl font-bold text-gray-900 hover:text-blue-600 transition duration-200">
+          <Link to={`/blog/${id}`}>{title}</Link>
+        </h1>
+
+        <div className="flex items-center gap-3 mt-5">
+          <img
+            className="w-10 h-10 rounded-full border"
+            src={`${import.meta.env.VITE_BACKEND_URL}/images/${author_image}`}
+            alt="author"
+          />
+          <div>
+            <p className="text-sm font-semibold text-gray-800">{author_name}</p>
+            <p className="text-xs text-gray-500">
+              {new Date(date).toLocaleDateString("en-US", {
+                month: "short",
+                day: "2-digit",
+                year: "numeric",
+              })}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-
 
 export default BlogCard;
