@@ -50,6 +50,9 @@ export const createBlog = async (req, res) => {
 export const deleteBlog = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
+    console.log("Blog Author ID:", blog.author.id.toString());
+console.log("Logged in User ID:", req.user._id.toString());
+
 
     if (!blog) {
       return res
@@ -87,7 +90,7 @@ export const deleteBlog = async (req, res) => {
 export const singleBlog = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
-    return res(200).json({ message: "Blog found", success: true, blog });
+    return res.status(200).json({ message: "Blog found", success: true, blog });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }

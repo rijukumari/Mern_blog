@@ -10,11 +10,14 @@ function Blogs() {
       <Hero />
       <h1 className="text-3xl text-center  font-bold my-6">All Blogs</h1>
       <p className=" text-base px-3 sm:text-lg leading-6 max-w-2xl mx-auto">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus odio
-        aperiam veniam ad rerum repellat dignissimos quisquam atque quasi
-        excepturi illum, molestias blanditiis quod sunt pariatur error, eveniet
-        ab perferendis.
+       
+      Welcome to <span className="font-semibold">Meta Blog</span> – your space to
+  explore ideas, stories, and insights that matter. From the latest in 
+  technology and lifestyle trends to weather updates and current news, 
+  we aim to make knowledge simple, engaging, and accessible for everyone. 
+  Here, learning meets inspiration and curiosity finds a home.
       </p>
+
       <div className="grid my-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-3 sm:px-4">
         {blogData.map((blog, index) => (
           <BlogCard

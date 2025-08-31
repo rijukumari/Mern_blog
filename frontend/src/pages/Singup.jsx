@@ -10,10 +10,16 @@ function Singup() {
     password: "",
     image: null,
   });
+
+  const [loading, setLoading] = useState(false); // ✅ correct useState
   const navigate = useNavigate();
-  const [setLoading] = useState(false);
+
   const OnChangeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const fileHandler = (e) => {
+    setFormData({ ...formData, image: e.target.files[0] });
   };
 
   const submitHandler = async (e) => {
@@ -26,8 +32,11 @@ function Singup() {
       data.append("image", formData.image);
 
       setLoading(true);
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/register`, data); // No manual headers
-      console.log("RES",res)
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/user/register`,
+        data
+      );
+
       if (res.data.success) {
         toast.success(res.data.message);
         navigate("/login");
@@ -39,9 +48,6 @@ function Singup() {
     }
   };
 
-  const fileHandler = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
-  };
   return (
     <div className="w-full bg-pink-200 py-12 mx-auto flex items-center justify-center">
       <div className="w-full bg-white max-w-md p-5 mx-auto py-6 border-1 border-gray-200 shadow-md">
@@ -82,13 +88,17 @@ function Singup() {
           <input
             onChange={fileHandler}
             accept="image/*"
-            value={formData.file}
             className="w-full p-2 border border-gray-300 rounded outline-none"
             type="file"
             required
           />
-          <button className="bg-orange-600 text-white px-6 py-2 w-full cursor-pointer rounded-md">
-            Singup
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-orange-600 text-white px-6 py-2 w-full cursor-pointer rounded-md disabled:opacity-50"
+          >
+            {loading ? "Signing up..." : "Signup"}
           </button>
         </form>
         <p className="text-center mt-4">
